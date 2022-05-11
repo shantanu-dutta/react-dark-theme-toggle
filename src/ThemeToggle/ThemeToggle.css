@@ -1,0 +1,99 @@
+* {
+  box-sizing: border-box;
+  /* Make sure all elements are above the background */
+  z-index: 1;
+  position: relative;
+}
+
+:root {
+  --black: #333;
+  --white: #f5f5f5;
+  --background: var(--white);
+  --foreground: var(--black);
+  --transition: 0.5s ease;
+}
+
+html {
+  background: var(--white);
+  color: var(--foreground);
+  transition: color var(--transition);
+}
+
+html::before {
+  content: '';
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: var(--black);
+  transform: translateX(-100%);
+  transition: transform var(--transition);
+  z-index: 0;
+}
+
+/* When the darkmode class is applied, set the pseudo element position to 0 */
+.darkmode::before {
+  transform: translateX(0);
+}
+
+.hidden {
+  position: absolute;
+  clip-path: inset(50%);
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.toggle-wrapper {
+  width: 130px;
+  display: block;
+}
+
+.toggle {
+  height: 65px;
+  width: 130px;
+  background: var(--foreground);
+  border-radius: 40px;
+  padding: 12px;
+  position: relative;
+  margin: auto;
+  cursor: pointer;
+}
+
+.toggle::before {
+  content: '';
+  display: block;
+  height: 41px;
+  width: 41px;
+  border-radius: 30px;
+  position: absolute;
+  z-index: 2;
+  transform: translate(0);
+  background: var(--background);
+  transition: transform var(--transition), background var(--transition);
+}
+
+.toggle.enabled::before {
+  transform: translateX(65px);
+}
+
+.toggle input {
+  position: absolute;
+  top: 0;
+  opacity: 0;
+}
+
+.toggle .icons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  margin: 0 5px;
+}
+
+.toggle .icons svg {
+  fill: var(--background);
+  height: 30px;
+  width: 30px;
+  z-index: 0;
+}
